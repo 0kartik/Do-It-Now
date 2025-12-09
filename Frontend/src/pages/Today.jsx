@@ -8,12 +8,10 @@ export default function Today() {
             <TaskCard
                 title="Learn React Basics"
                 description="Understanding components, props, states"
-                status={false}
             />
             <TaskCard
                 title="Do 1 DSA Problem"
                 description="Keep consistent"
-                status={true}
             />
         </>
     )

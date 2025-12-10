@@ -1,18 +1,31 @@
 import TaskCard from "../components/Taskcard"
-
+const tasks = [
+  {
+    title: "Learn React State",
+    description: "Understand useState and component reactivity"
+  },
+  {
+    title: "Solve 1 DSA Problem",
+    description: "Build consistency for placements"
+  },
+  {
+    title: "Work on Consistency App",
+    description: "Daily small progress + commit"
+  }
+]
 export default function Today() {
     return (
         <>
             <h1> Today </h1>
             
-            <TaskCard
-                title="Learn React Basics"
-                description="Understanding components, props, states"
-            />
-            <TaskCard
-                title="Do 1 DSA Problem"
-                description="Keep consistent"
-            />
+            {tasks.map((task, index) => (
+                    <TaskCard 
+                        key={index}
+                        title={task.title}
+                        description={task.description}
+                    />
+            ))}
+
         </>
     )
 }

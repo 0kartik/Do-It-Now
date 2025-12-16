@@ -1,28 +1,8 @@
 import { useState } from "react"
+import { initialTasks } from "../data/tasks"
 
 export default function Today() {
-  const [tasks, setTasks] = useState([
-    {
-      title: "Learn React State",
-      description: "Understand useState and component reactivity",
-      status: false
-    },
-    {
-      title: "Solve 1 DSA Problem",
-      description: "Build consistency for placements",
-      status: false
-    },
-    {
-      title: "Work on Consistency App",
-      description: "Daily small progress + commit",
-      status: false
-    },
-    function toggleStatus(index) {
-    const updated = [...tasks]
-    updated[index].status = !updated[index].status
-    setTasks(updated)
-      }
-  ])
+  const [tasks, setTasks] = useState(initialTasks)
     return (
         <>
           <h1> Today </h1>

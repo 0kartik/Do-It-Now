@@ -18,6 +18,11 @@ export default function Today() {
     setTasks([...tasks, task])
     setNewTask("")
   }
+  function deleteTask(index) {
+  const updated = tasks.filter((_, i) => i !== index)
+  setTasks(updated)
+  }
+
 
   return (
     <>
@@ -39,6 +44,7 @@ export default function Today() {
           description={task.description}
           status={task.status}
           onToggle={() => toggleStatus(index)}
+          onDelete={() => deleteTask(index)}
         />
       ))}
     </>

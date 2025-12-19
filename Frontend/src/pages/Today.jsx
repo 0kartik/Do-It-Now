@@ -23,6 +23,14 @@ export default function Today() {
   setTasks(updated)
   }
 
+  // Toggle completion status of a task
+  function toggleTaskStatus(index) {
+  const updated = [...tasks]
+  updated[index].status = !updated[index].status
+  setTasks(updated)
+  }
+
+
 
   return (
     <>

@@ -1,9 +1,16 @@
 import { useState } from "react"
+useEffect(() => {
+  localStorage.setItem("tasks", JSON.stringify(tasks))
+}, [tasks])
+
 import { initialTasks } from "../data/tasks"
 import TaskCard from "../components/TaskCard"
 
 export default function Today() {
-  const [tasks, setTasks] = useState(initialTasks)
+  const [tasks, setTasks] = useState(() => {
+  const saved = localStorage.getItem("tasks")
+  return saved ? JSON.parse(saved) : initialTasks
+  })
   const [newTask, setNewTask] = useState("")
 
   function addTask() {

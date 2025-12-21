@@ -1,6 +1,8 @@
 import { useState } from "react"
 import "./TaskCard.css"
+
 export default function TaskCard({ title, description, status, onToggle, onDelete }) {
+  // ... rest of the code
   return (
     <div className="task-card">
       <h3>{title}</h3>

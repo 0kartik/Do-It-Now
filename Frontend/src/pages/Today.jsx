@@ -1,43 +1,47 @@
-import { useState } from "react"
-useEffect(() => {
-  localStorage.setItem("tasks", JSON.stringify(tasks))
-}, [tasks])
-
+import { useState, useEffect } from "react"
 import { initialTasks } from "../data/tasks"
-import TaskCard from "../components/TaskCard"
+import TaskCard from "..src/components/Taskcard"
 
 export default function Today() {
   const [tasks, setTasks] = useState(() => {
-  const saved = localStorage.getItem("tasks")
-  return saved ? JSON.parse(saved) : initialTasks
+    const saved = localStorage.getItem("tasks")
+    return saved ? JSON.parse(saved) : initialTasks
   })
   const [newTask, setNewTask] = useState("")
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+  }, [tasks])
 
   function addTask() {
     if (!newTask.trim()) return
 
     const task = {
-      title: newTask,
-      description: "User added task",
-      status: false
-    }
+  id: crypto.randomUUID(),
+  title: "Learn React",
+  description: "Practice components",
+  status: false
+}
+
 
     setTasks([...tasks, task])
     setNewTask("")
   }
-  function deleteTask(index) {
-  const updated = tasks.filter((_, i) => i !== index)
-  setTasks(updated)
-  }
 
-  // Toggle completion status of a task
-  function toggleTaskStatus(index) {
-  const updated = [...tasks]
-  updated[index].status = !updated[index].status
-  setTasks(updated)
-  }
+ function deleteTask(id) {
+  setTasks(tasks => tasks.filter(task => task.id !== id))
+}
 
 
+  function toggleTaskStatus(id) {
+  setTasks(tasks =>
+    tasks.map(task =>
+      task.id === id
+        ? { ...task, status: !task.status }
+        : task
+    )
+  )
+}
 
   return (
     <>
@@ -52,16 +56,17 @@ export default function Today() {
 
       <button onClick={addTask}>Add Task</button>
 
-      {tasks.map((task, index) => (
-        <TaskCard
-          key={index}
-          title={task.title}
-          description={task.description}
-          status={task.status}
-          onToggle={() => toggleStatus(index)}
-          onDelete={() => deleteTask(index)}
-        />
-      ))}
+          {tasks.map(task => (
+      <TaskCard
+        key={task.id}
+        title={task.title}
+        description={task.description}
+        status={task.status}
+        onToggle={() => toggleTaskStatus(task.id)}
+        onDelete={() => deleteTask(task.id)}
+      />
+    ))}
+
     </>
   )
 }

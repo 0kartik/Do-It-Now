@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { initialTasks } from "../data/tasks"
-import TaskCard from "..src/components/Taskcard"
+import TaskCard from "../components/TaskCard"
 
 export default function Today() {
   const [tasks, setTasks] = useState(() => {
@@ -17,31 +17,29 @@ export default function Today() {
     if (!newTask.trim()) return
 
     const task = {
-  id: crypto.randomUUID(),
-  title: "Learn React",
-  description: "Practice components",
-  status: false
-}
-
+      id: crypto.randomUUID(),
+      title: newTask,
+      description: "User added task",
+      status: false
+    }
 
     setTasks([...tasks, task])
     setNewTask("")
   }
 
- function deleteTask(id) {
-  setTasks(tasks => tasks.filter(task => task.id !== id))
-}
-
+  function deleteTask(id) {
+    setTasks(tasks => tasks.filter(task => task.id !== id))
+  }
 
   function toggleTaskStatus(id) {
-  setTasks(tasks =>
-    tasks.map(task =>
-      task.id === id
-        ? { ...task, status: !task.status }
-        : task
+    setTasks(tasks =>
+      tasks.map(task =>
+        task.id === id
+          ? { ...task, status: !task.status }
+          : task
+      )
     )
-  )
-}
+  }
 
   return (
     <>
@@ -56,17 +54,16 @@ export default function Today() {
 
       <button onClick={addTask}>Add Task</button>
 
-          {tasks.map(task => (
-      <TaskCard
-        key={task.id}
-        title={task.title}
-        description={task.description}
-        status={task.status}
-        onToggle={() => toggleTaskStatus(task.id)}
-        onDelete={() => deleteTask(task.id)}
-      />
-    ))}
-
+      {tasks.map(task => (
+        <TaskCard
+          key={task.id}
+          title={task.title}
+          description={task.description}
+          status={task.status}
+          onToggle={() => toggleTaskStatus(task.id)}
+          onDelete={() => deleteTask(task.id)}
+        />
+      ))}
     </>
   )
 }

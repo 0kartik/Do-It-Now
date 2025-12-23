@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import { initialTasks } from "../data/tasks"
+import { APP_CONFIG } from "../config/appConfig"
 
 export function useTasks() {
   const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem("tasks")
+    const saved = localStorage.getItem(APP_CONFIG.storageKey)
     return saved ? JSON.parse(saved) : initialTasks
   })
 

@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Header />
-
+        <h1>{APP_CONFIG.appName}</h1>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/today" element={<Today />} />

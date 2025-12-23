@@ -9,7 +9,7 @@ export function useTasks() {
   })
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks))
+    localStorage.setItem(APP_CONFIG.storageKey, JSON.stringify(tasks))
   }, [tasks])
 
   function addTask(title) {

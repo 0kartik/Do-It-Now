@@ -43,7 +43,7 @@ export default function Today() {
       <div>
         <h2>Task List ({tasks.length})</h2>
         {tasks.length === 0 ? (
-          <p style={{ color: "#888" }}>No tasks yet. Add one to get started!</p>
+          <p style={{ opacity: 0.7 }}>No tasks yet. Add one to get started!</p>
         ) : (
           tasks.map(task => (
             <TaskCard

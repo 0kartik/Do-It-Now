@@ -13,6 +13,7 @@ export function useTasks() {
   }, [tasks])
 
   function addTask(title) {
+    if (!title || title.trim().length < 3) return
     if (!title.trim()) return
 
     setTasks(prev => [

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Today from './pages/Today'
 import Stats from "./pages/Stats"
@@ -11,12 +11,12 @@ function App() {
     <>
       <Header />
       <h1>{APP_CONFIG.appName}</h1>
-      <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/today" element={<Today />} />
+        <Route path="/stats" element={<Stats />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
-      </BrowserRouter>
     </>
   )
 }

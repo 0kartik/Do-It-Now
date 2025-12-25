@@ -5,6 +5,8 @@ export default function Header() {
         <nav>
             <Link to='/'> Home </Link>
             <Link to='/Today'> Today </Link>
+            <Link to='/Stats'> Stats </Link>
+            <Link to='/Settings'> Settings </Link>
         </nav>
     )
 }

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useTasks } from "../hooks/usetasks"
 import TaskCard from "../components/TaskCard"
+import { useTasksContext } from "../context/TasksContext"
 
 export default function Today() {
   const {
@@ -8,7 +9,7 @@ export default function Today() {
     addTask,
     toggleTaskStatus,
     deleteTask
-  } = useTasks()
+  } = useTasksContext()
 
   const [newTaskTitle, setNewTaskTitle] = useState("")
 

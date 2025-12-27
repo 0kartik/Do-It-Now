@@ -1,7 +1,7 @@
 import { useTasks } from "../hooks/usetasks"
 
 export default function Stats() {
-  const { tasks } = useTasks()
+  const { tasks } = useTasksContext()
   const total = tasks.length
   const completed = tasks.filter(t => t.status).length
   const pending = total - completed

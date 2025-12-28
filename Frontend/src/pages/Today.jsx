@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useTasks } from "../hooks/usetasks"
 import TaskCard from "../components/TaskCard"
 import { useTasksContext } from "../context/TasksContext"
+import { useCallback } from "react"
 
 export default function Today() {
   const {
@@ -12,6 +13,17 @@ export default function Today() {
   } = useTasksContext()
 
   const [newTaskTitle, setNewTaskTitle] = useState("")
+
+  const handleToggle = useCallback(
+  (id) => toggleTaskStatus(id),
+  [toggleTaskStatus]
+)
+
+  const handleDelete = useCallback(
+    (id) => deleteTask(id),
+    [deleteTask]
+  )
+
 
   function handleAddTask(e) {
     e.preventDefault()
@@ -52,8 +64,8 @@ export default function Today() {
               title={task.title}
               description={task.description}
               status={task.status}
-              onToggle={() => toggleTaskStatus(task.id)}
-              onDelete={() => deleteTask(task.id)}
+              onToggle={() => handleToggle(task.id)}
+              onDelete={() => handleDelete(task.id)}
             />
           ))
         )}

@@ -1,6 +1,8 @@
+import { memo } from "react"
 import "./TaskCard.css"
 
-export default function TaskCard({ title, description, status, onToggle, onDelete }) {
+function TaskCard({ title, description, status, onToggle, onDelete }) {
+  console.log("TaskCard render:", title)
   return (
     <div className="task-card">
       <h3 style={{ margin: "0 0 8px 0" }}>{title}</h3>
@@ -46,3 +48,4 @@ export default function TaskCard({ title, description, status, onToggle, onDelet
     </div>
   )
 }
+export default memo(TaskCard)

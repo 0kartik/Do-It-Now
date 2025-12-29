@@ -1,0 +1,16 @@
+:root {
+  --color-primary: #2563eb;
+  --color-bg: #f9fafb;
+  --color-text: #111827;
+  --color-muted: #6b7280;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}

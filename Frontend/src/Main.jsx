@@ -4,8 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { TasksProvider } from "./context/TasksContext"
-
-
+import "./styles/global.css"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

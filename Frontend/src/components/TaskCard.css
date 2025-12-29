@@ -1,6 +1,11 @@
 .task-card {
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-muted);
+  border-radius: var(--radius-md);
   padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
+  background: white;
+}
+button {
+  background: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-sm);
 }

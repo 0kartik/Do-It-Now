@@ -37,6 +37,7 @@ export default function Today() {
 
       <form onSubmit={handleAddTask} style={{ marginBottom: "30px" }}>
         <input
+          id="task-input"
           type="text"
           value={newTaskTitle}
           onChange={(e) => setNewTaskTitle(e.target.value)}
@@ -52,6 +53,7 @@ export default function Today() {
         />
         <button type="submit">Add Task</button>
       </form>
+          <label htmlFor="task-input">New Task</label>
 
       <div>
         <h2>Task List ({tasks.length})</h2>

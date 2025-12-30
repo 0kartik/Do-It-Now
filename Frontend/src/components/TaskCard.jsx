@@ -22,17 +22,13 @@ function TaskCard({ title, description, status, onToggle, onDelete }) {
       </div>
 
       <div style={{ display: "flex", gap: "10px" }}>
-        <button 
-          onClick={onToggle}
-          style={{ 
-            backgroundColor: status ? "#ff9800" : "#4caf50",
-            color: "white",
-            border: "none",
-            flex: 1
-          }}
-        >
-          {status ? "Mark Incomplete" : "Mark Complete"}
-        </button>
+        <button
+              onClick={onToggle}
+              aria-label={status ? "Mark task as not done" : "Mark task as done"}
+            >
+              {status ? "Undo" : "Done"}
+            </button>
+
 
         <button 
           onClick={onDelete}

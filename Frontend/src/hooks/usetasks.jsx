@@ -15,6 +15,9 @@ export function useTasks() {
   function addTask(title) {
     if (!title || title.trim().length < 3) return
     if (!title.trim()) return
+    if (title === "crash") {
+  throw new Error("Test crash")
+}
 
     setTasks(prev => [
       ...prev,

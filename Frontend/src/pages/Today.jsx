@@ -1,8 +1,7 @@
-import { useState } from "react"
-import { useTasks } from "../hooks/usetasks"
-import TaskCard from "../components/TaskCard"
+import { useState, useCallback } from "react"
 import { useTasksContext } from "../context/TasksContext"
-import { useCallback } from "react"
+import TaskCard from "../components/TaskCard"
+import TaskInput from "../components/TaskInput"
 
 export default function Today() {
   const {
@@ -15,15 +14,14 @@ export default function Today() {
   const [newTaskTitle, setNewTaskTitle] = useState("")
 
   const handleToggle = useCallback(
-  (id) => toggleTaskStatus(id),
-  [toggleTaskStatus]
-)
+    (id) => toggleTaskStatus(id),
+    [toggleTaskStatus]
+  )
 
   const handleDelete = useCallback(
     (id) => deleteTask(id),
     [deleteTask]
   )
-
 
   function handleAddTask(e) {
     e.preventDefault()
@@ -36,15 +34,13 @@ export default function Today() {
       <h1>Today's Tasks</h1>
 
       <form onSubmit={handleAddTask} style={{ marginBottom: "30px" }}>
-                  <TaskInput
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            onSubmit={() => addTask(newTask)}
-            disabled={!newTask.trim()}
-          />
-
-        </form>
-          <label htmlFor="task-input">New Task</label>
+        <TaskInput
+          value={newTaskTitle}
+          onChange={(e) => setNewTaskTitle(e.target.value)}
+          onSubmit={handleAddTask}
+          disabled={!newTaskTitle.trim()}
+        />
+      </form>
 
       <div>
         <h2>Task List ({tasks.length})</h2>

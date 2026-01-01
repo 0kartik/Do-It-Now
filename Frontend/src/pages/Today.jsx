@@ -36,23 +36,14 @@ export default function Today() {
       <h1>Today's Tasks</h1>
 
       <form onSubmit={handleAddTask} style={{ marginBottom: "30px" }}>
-        <input
-          id="task-input"
-          type="text"
-          value={newTaskTitle}
-          onChange={(e) => setNewTaskTitle(e.target.value)}
-          placeholder="Enter task title"
-          style={{ 
-            padding: "10px", 
-            marginRight: "10px",
-            fontSize: "16px",
-            width: "300px",
-            borderRadius: "4px",
-            border: "1px solid #ccc"
-          }}
-        />
-        <button type="submit">Add Task</button>
-      </form>
+                  <TaskInput
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            onSubmit={() => addTask(newTask)}
+            disabled={!newTask.trim()}
+          />
+
+        </form>
           <label htmlFor="task-input">New Task</label>
 
       <div>

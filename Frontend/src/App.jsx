@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Today from './pages/Today'
-import Stats from "./pages/Stats"
 import Settings from "./pages/Settings"
 import Header from './components/Header'
 import { APP_CONFIG } from './config/appConfig'
@@ -14,8 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/today" element={<Today />} />
-        <Route path="/stats" element={<Stats />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/Habits" element={<Habits />} />
       </Routes>
     </>
   )

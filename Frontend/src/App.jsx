@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Today from './pages/Today'
 import Settings from "./pages/Settings"
+import Habits from './pages/Habits' 
 import Header from './components/Header'
 import { APP_CONFIG } from './config/appConfig'
 

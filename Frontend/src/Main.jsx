@@ -12,7 +12,9 @@ createRoot(document.getElementById('root')).render(
     <ErrorBoundary>
       <BrowserRouter>
         <TasksProvider>
+          <HabitsProvider>
           <App />
+          </HabitsProvider>
         </TasksProvider>
       </BrowserRouter>
     </ErrorBoundary>

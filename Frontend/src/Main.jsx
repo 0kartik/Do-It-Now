@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { TasksProvider } from "./context/TasksContext"
+import { HabitsProvider } from "./context/HabitsContext"
 import "./styles/global.css"
 import ErrorBoundary from "./components/ErrorBoundary"
 
@@ -13,7 +14,7 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <TasksProvider>
           <HabitsProvider>
-          <App />
+            <App />
           </HabitsProvider>
         </TasksProvider>
       </BrowserRouter>

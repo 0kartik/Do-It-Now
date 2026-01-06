@@ -1,6 +1,6 @@
 export const APP_CONFIG = {
-  appName: import.meta.env.VITE_APP_NAME,
-  storageKey: import.meta.env.VITE_STORAGE_KEY,
-  environment: import.meta.env.VITE_ENV,
-  VITE_LAST_OPEN_KEY: last_open_date
+  appName: import.meta.env.VITE_APP_NAME || "Do It Now App",
+  storageKey: import.meta.env.VITE_STORAGE_KEY || "consistency_tasks",
+  environment: import.meta.env.VITE_ENV || "development",
+  lastOpenKey: "last_open_date"
 }

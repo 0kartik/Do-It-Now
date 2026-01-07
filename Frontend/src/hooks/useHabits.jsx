@@ -34,6 +34,19 @@ export function useHabits() {
     )
   }
 
+  habits.forEach(habit => {
+  const gap = dayDiff(habit.lastCompletedAt)
+
+  if (gap === 1) {
+    // yesterday completed → streak safe
+    return
+  }
+
+  if (gap > 1) {
+    habit.streak = 0
+  }
+})
+
   return {
     habits,
     completeHabit

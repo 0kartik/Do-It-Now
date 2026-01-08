@@ -37,14 +37,19 @@ export function useHabits() {
   habits.forEach(habit => {
   const gap = dayDiff(habit.lastCompletedAt)
 
-  if (gap === 1) {
-    // yesterday completed → streak safe
-    return
-  }
+if (gap === 1) {
+  return
+}
 
-  if (gap > 1) {
-    habit.streak = 0
-  }
+if (gap === 2 && !habit.graceUsed) {
+  habit.graceUsed = true
+  return
+}
+
+if (gap > 2) {
+  habit.streak = 0
+  habit.graceUsed = false
+}
 })
 
   return {

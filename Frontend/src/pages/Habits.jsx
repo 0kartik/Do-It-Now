@@ -2,6 +2,9 @@ import { useHabitsContext } from "../context/HabitsContext"
 
 export default function Habits() {
   const { habits, completeHabit } = useHabitsContext()
+  const confirm = window.confirm("Did you actually complete this habit today?")
+  if (!confirm) return
+
 
   return (
     <div style={{ padding: "20px" }}>

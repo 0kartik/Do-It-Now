@@ -9,6 +9,11 @@ export function isSameDay(ts1, ts2) {
     d1.getDate() === d2.getDate()
   )
 }
+export function isCompletedToday(date) {
+  if (!date) return false
+  return dayDiff(date) === 0
+}
+
 export function updateHabitOnComplete(habit, now = Date.now()) {
   if (!habit.lastCompleted) {
     return {

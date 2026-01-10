@@ -1,5 +1,6 @@
 export function getStreakRisk(habit) {
   if (!habit.lastCompletedAt) return "none"
+  dayDiff(lastCompletedAt) >= 1
 
   const gap = dayDiff(habit.lastCompletedAt)
 

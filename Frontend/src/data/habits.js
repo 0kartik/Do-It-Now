@@ -5,6 +5,7 @@ export const initialHabits = [
     frequency: "daily",
     streak: 0,
     lastCompleted: null,
+    graceUsed: false,
     createdAt: Date.now()
   }
 ]

@@ -2,9 +2,13 @@ import { useHabitsContext } from "../context/HabitsContext"
 
 export default function Habits() {
   const { habits, completeHabit } = useHabitsContext()
-  const confirm = window.confirm("Did you actually complete this habit today?")
-  if (!confirm) return
 
+  function handleComplete(id) {
+    const confirmed = window.confirm("Did you actually complete this habit today?")
+    if (!confirmed) return
+    
+    completeHabit(id)
+  }
 
   return (
     <div style={{ padding: "20px" }}>
@@ -22,7 +26,7 @@ export default function Habits() {
             <p>
               <strong>{habit.title}</strong> — Streak: {habit.streak} days
             </p>
-            <button onClick={() => completeHabit(habit.id)}>
+            <button onClick={() => handleComplete(habit.id)}>
               Mark Done Today
             </button>
           </div>

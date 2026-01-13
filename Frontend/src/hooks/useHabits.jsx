@@ -6,6 +6,11 @@ import { isNewDay } from "../utils/dateUtils"
 export function useHabits() {
   const [habits, setHabits] = useState(() => {
     const saved = localStorage.getItem("habits")
+    const habits = rawHabits.map(toHabitDomain)
+    localStorage.setItem(KEY, JSON.stringify(
+        habits.map(toHabitStorage)
+    ))
+
     return saved ? JSON.parse(saved) : initialHabits
   })
 

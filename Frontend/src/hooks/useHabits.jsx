@@ -3,10 +3,10 @@ import { initialHabits } from "../data/habits"
 import { updateHabitOnComplete } from "../utils/habitLogic"
 import { isNewDay } from "../utils/dateUtils"
 
+
 export function useHabits() {
-  const [habits, setHabits] = useState(() => {
-    const saved = localStorage.getItem("habits")
-    const habits = rawHabits.map(toHabitDomain)
+  const [habits, setHabits] = useState(async () => {
+    await saveHabits(habits.map(toHabitStorage))
     localStorage.setItem(KEY, JSON.stringify(
         habits.map(toHabitStorage)
     ))

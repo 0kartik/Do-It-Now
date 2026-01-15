@@ -4,15 +4,18 @@ import { updateHabitOnComplete } from "../utils/habitLogic"
 import { isNewDay } from "../utils/dateUtils"
 
 
-export function useHabits() {
-  const [habits, setHabits] = useState(async () => {
-    await saveHabits(habits.map(toHabitStorage))
+export async function useHabits() {
+    const success = await saveHabits(habits.map(toHabitStorage))
+    if (!success) {
+      console.warn("Data not saved")
+    }
+
     localStorage.setItem(KEY, JSON.stringify(
         habits.map(toHabitStorage)
     ))
 
     return saved ? JSON.parse(saved) : initialHabits
-  })
+  }
 
   useEffect(() => {
   const lastOpen = localStorage.getItem("last_open_date")
@@ -61,4 +64,3 @@ if (gap > 2) {
     habits,
     completeHabit
   }
-}

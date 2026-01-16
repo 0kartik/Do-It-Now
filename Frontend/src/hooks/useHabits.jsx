@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { initialHabits } from "../data/habits"
 import { updateHabitOnComplete } from "../utils/habitLogic"
 import { isNewDay } from "../utils/dateUtils"
+const [loading, setLoading] = useState(true)
 
 
 export async function useHabits() {
@@ -25,6 +26,16 @@ export async function useHabits() {
   }
 
   localStorage.setItem("last_open_date", Date.now())
+}, [])
+
+  useEffect(() => {
+  async function load() {
+    setLoading(true)
+    const raw = await fetchHabits()
+    setHabits(raw.map(toHabitDomain))
+    setLoading(false)
+  }
+  load()
 }, [])
 
 

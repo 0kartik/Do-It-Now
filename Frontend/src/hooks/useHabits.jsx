@@ -3,7 +3,8 @@ import { initialHabits } from "../data/habits"
 import { updateHabitOnComplete } from "../utils/habitLogic"
 import { isNewDay } from "../utils/dateUtils"
 const [loading, setLoading] = useState(true)
-
+import { fetchHabits } from "./habitQueries"
+import { saveHabits } from "./habitCommands"
 
 export async function useHabits() {
     const success = await saveHabits(habits.map(toHabitStorage))

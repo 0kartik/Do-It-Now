@@ -7,5 +7,5 @@ export function getStreakRisk(habit) {
   if (gap === 1 && !habit.graceUsed) return "warning"
   if (gap === 2 && !habit.graceUsed) return "critical"
 
-  return "none"
+  return "None"
 }

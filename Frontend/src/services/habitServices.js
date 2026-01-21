@@ -1,3 +1,5 @@
+const STORAGE_KEY = "habits"
+
 export async function fetchHabits() {
   try {
     const raw = JSON.parse(localStorage.getItem(STORAGE_KEY))

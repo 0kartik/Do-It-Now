@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { initialTasks } from "../data/tasks"
-import { saveTasks, fetchTasks, logIntent } from "../services/storageService"
+import { saveTasks, fetchTasks, logIntent } from "src/services/storageService"
 
 export function useTasks() {
   const [tasks, setTasks] = useState([])

@@ -1,6 +1,6 @@
 // src/pages/Analytics.jsx
 import { useState, useEffect } from "react"
-import { getIntentLogs, replayIntents } from "../services/storageService"
+import { getIntentLogs, replayIntents} from "src/services/storageService"
 
 export default function Analytics() {
   const [logs, setLogs] = useState([])

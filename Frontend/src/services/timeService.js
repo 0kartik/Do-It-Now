@@ -1,9 +1,13 @@
+let _now = () => Date.now()
+
 export function now() {
-  return Date.now()
+  return _now()
 }
 
-export function today() {
-  const d = new Date(now())
-  d.setHours(0, 0, 0, 0)
-  return d.getTime()
+export function setNow(fn) {
+  _now = fn
+}
+
+export function resetNow() {
+  _now = () => Date.now()
 }

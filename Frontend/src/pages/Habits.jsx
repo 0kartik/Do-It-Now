@@ -6,6 +6,10 @@ import { getStreakRisk } from "../utils/riskUtils"
 export default function Habits() {
   const { habits, loading, completeHabit, addHabit, deleteHabit } = useHabitsContext()
   const [newHabitTitle, setNewHabitTitle] = useState("")
+  const confirm = window.confirm(
+    "Deleting this habit will erase its streak and history. Continue?"
+  )
+  if (!confirm) return
 
   function handleComplete(id) {
     const habit = habits.find(h => h.id === id)

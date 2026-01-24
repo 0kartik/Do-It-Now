@@ -12,3 +12,7 @@ export async function logIntent(event) {
     // silently fail
   }
 }
+logIntent({
+  type: "HABIT_RESTORED",
+  habitId
+})

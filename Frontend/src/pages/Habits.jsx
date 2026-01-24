@@ -10,6 +10,14 @@ export default function Habits() {
     "Deleting this habit will erase its streak and history. Continue?"
   )
   if (!confirm) return
+  const activeHabits = habits.filter(h => !h.isArchived)
+  const archivedHabits = habits.filter(h => h.isArchived)
+
+
+  const confirm2 = window.confirm("Restore this habit and its history?")
+  if (!confirm2) return
+
+  habit.isArchived = false
 
   function handleComplete(id) {
     const habit = habits.find(h => h.id === id)

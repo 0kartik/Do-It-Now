@@ -32,6 +32,9 @@ export default function Analytics() {
     setStats(calculatedStats)
   }, [])
 
+
+  
+
   function formatDate(timestamp) {
     return new Date(timestamp).toLocaleString()
   }

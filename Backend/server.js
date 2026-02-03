@@ -3,6 +3,12 @@ import cors from "cors"
 
 import habitsRoutes from "./routes/habits.js"
 app.use("/habits", habitsRoutes)
+import mongoose from "mongoose"
+
+mongoose.connect("mongodb://127.0.0.1:27017/consistency_app")
+  .then(() => console.log("DB connected"))
+  .catch(err => console.log(err))
+
 const app = express()
 app.use(cors())
 app.use(express.json())

@@ -12,4 +12,16 @@ router.post("/", (req, res) => {
   res.json(req.body)
 })
 
+import Habit from "../Models/Habit.js"
+
+router.get("/", async (req, res) => {
+  const habits = await Habit.find()
+  res.json(habits)
+})
+
+router.post("/", async (req, res) => {
+  const habit = await Habit.create(req.body)
+  res.json(habit)
+})
+
 export default route

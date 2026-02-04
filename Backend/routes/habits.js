@@ -24,4 +24,21 @@ router.post("/", async (req, res) => {
   res.json(habit)
 })
 
+// UPDATE habit
+router.put("/:id", async (req, res) => {
+  const updated = await Habit.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  )
+  res.json(updated)
+})
+
+// DELETE habit
+router.delete("/:id", async (req, res) => {
+  await Habit.findByIdAndDelete(req.params.id)
+  res.json({ success: true })
+})
+
+
 export default route

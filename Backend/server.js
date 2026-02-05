@@ -1,5 +1,7 @@
 import express from "express"
 import cors from "cors"
+import authRoutes from "./routes/auth.js"
+app.use("/auth", authRoutes)
 
 import habitsRoutes from "./routes/habits.js"
 app.use("/habits", habitsRoutes)

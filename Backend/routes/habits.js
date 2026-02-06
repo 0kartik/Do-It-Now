@@ -6,6 +6,9 @@ let habits = []
 router.get("/", (req, res) => {
   res.json(habits)
 })
+import { authMiddleware } from "../middleware/authMiddleware.js"
+
+router.use(authMiddleware)
 
 router.post("/", (req, res) => {
   habits.push(req.body)

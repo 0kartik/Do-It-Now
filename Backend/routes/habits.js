@@ -3,6 +3,21 @@ const router = express.Router()
 
 let habits = []
 
+router.post(
+  "/",
+  [
+    body("name").notEmpty(),
+    body("effort").optional().isInt({ min: 1, max: 3 }),
+    body("priority").optional().isInt({ min: 1, max: 3 })
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+  }
+)
 router.get("/", (req, res) => {
   res.json(habits)
 })

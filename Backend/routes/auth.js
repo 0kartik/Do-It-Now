@@ -2,9 +2,22 @@ import express from "express"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import User from "../Models/User.js"
+import { body, validationResult } from "express-validator"
 
-const router = express.Router()
 
+router.post(
+  "/register",
+  [
+    body("email").isEmail(),
+    body("password").isLength({ min: 6 }),
+    body("name").notEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+  })
 router.post("/register", async (req, res) => {
   const hashed = await bcrypt.hash(req.body.password, 10)
 

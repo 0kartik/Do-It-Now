@@ -4,6 +4,17 @@ import jwt from "jsonwebtoken"
 import User from "../Models/User.js"
 import { body, validationResult } from "express-validator"
 
+import { AppError } from "../utils/AppError.js"
+
+router.get("/", async (req, res, next) => {
+  try {
+    const habits = await Habit.find({ userId: req.userId })
+    res.json(habits)
+  } catch (err) {
+    next(new AppError("Failed to fetch habits", 500))
+  }
+})
+
 
 router.post(
   "/register",
@@ -28,6 +39,7 @@ router.post("/register", async (req, res) => {
 
   res.json(user)
 })
+
 
 router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.email })

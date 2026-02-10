@@ -25,3 +25,5 @@ app.listen(5000, () => {
 
 import { errorHandler } from "./middleware/errorMiddleware.js"
 app.use(errorHandler)
+import { requestLogger } from "./middleware/loggerMiddleware.js"
+app.use(requestLogger)

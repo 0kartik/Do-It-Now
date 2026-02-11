@@ -1,10 +1,14 @@
 import express from "express"
 import cors from "cors"
 import authRoutes from "./routes/auth.js"
-app.use("/auth", authRoutes)
+app.use("/api/v1/auth", authRoutes)
+
+import { registerRoutes } from "./routes/index.js"
+registerRoutes(app)
+
 
 import habitsRoutes from "./routes/habits.js"
-app.use("/habits", habitsRoutes)
+app.use("/api/v1/habits", habitsRoutes)
 import mongoose from "mongoose"
 
 mongoose.connect("mongodb://127.0.0.1:27017/consistency_app")

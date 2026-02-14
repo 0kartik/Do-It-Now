@@ -15,6 +15,12 @@ router.get("/", async (req, res, next) => {
   }
 })
 
+const authLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 20,
+  message: "Too many login attempts"
+})
+
 
 router.post(
   "/register",

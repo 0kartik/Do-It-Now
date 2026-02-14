@@ -31,3 +31,13 @@ import { errorHandler } from "./middleware/errorMiddleware.js"
 app.use(errorHandler)
 import { requestLogger } from "./middleware/loggerMiddleware.js"
 app.use(requestLogger)
+import rateLimit from "express-rate-limit"
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests, try later"
+})
+
+app.use(limiter)
+app.use("/api/v1/auth", authLimiter)

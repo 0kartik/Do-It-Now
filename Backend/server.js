@@ -6,6 +6,10 @@ app.use("/api/v1/auth", authRoutes)
 import { registerRoutes } from "./routes/index.js"
 registerRoutes(app)
 
+import { processJobs } from "./utils/jobQueue.js"
+
+processJobs()
+
 
 import habitsRoutes from "./routes/habits.js"
 app.use("/api/v1/habits", habitsRoutes)
@@ -38,6 +42,7 @@ const limiter = rateLimit({
   max: 100,
   message: "Too many requests, try later"
 })
+
 
 app.use(limiter)
 app.use("/api/v1/auth", authLimiter)

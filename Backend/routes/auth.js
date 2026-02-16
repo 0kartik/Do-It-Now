@@ -61,4 +61,24 @@ router.post("/login", async (req, res) => {
   res.json({ token })
 })
 
+import { getCache, setCache } from "../utils/cache.js"
+
+router.get("/", async (req, res, next) => {
+  try {
+    const key = `${req.userId}-${JSON.stringify(req.query)}`
+
+    const cached = getCache(key)
+    if (cached) return res.json(cached)
+
+    const habits = await Habit.find({ userId: req.userId })
+
+    setCache(key, habits)
+
+    res.json(habits)
+  } catch (err) {
+    next(err)
+  }
+})
+cache.clear()
+
 export default router

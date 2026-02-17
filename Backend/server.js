@@ -10,6 +10,10 @@ import { processJobs } from "./utils/jobQueue.js"
 
 processJobs()
 
+import swaggerUi from "swagger-ui-express"
+import { swaggerSpec } from "./config/swagger.js"
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 import habitsRoutes from "./routes/habits.js"
 app.use("/api/v1/habits", habitsRoutes)

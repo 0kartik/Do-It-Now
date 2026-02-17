@@ -81,4 +81,14 @@ router.get("/", async (req, res, next) => {
 })
 cache.clear()
 
+/**
+ * @swagger
+ * /api/v1/auth/login:
+ *   post:
+ *     summary: Login user
+ *     responses:
+ *       200:
+ *         description: Returns JWT token
+ */
+
 export default router

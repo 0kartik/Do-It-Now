@@ -47,6 +47,8 @@ const limiter = rateLimit({
   message: "Too many requests, try later"
 })
 
+const PORT = process.env.PORT || 5000
+app.disable("x-powered-by")
 
 app.use(limiter)
 app.use("/api/v1/auth", authLimiter)

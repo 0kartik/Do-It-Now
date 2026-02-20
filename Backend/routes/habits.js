@@ -3,21 +3,10 @@ const router = express.Router()
 
 let habits = []
 
-router.get("/", async (req, res, next) => {
-  try {
-    const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || 10
-    const skip = (page - 1) * limit
-
-    const habits = await Habit.find({ userId: req.userId })
-      .skip(skip)
-      .limit(limit)
-
-    res.json(habits)
-  } catch (err) {
-    next(err)
-  }
-})
+router.get("/", asyncHandler(async (req, res) => {
+  const habits = await Habit.find({ userId: req.userId })
+  res.json(habits)
+}))
 
 const filter = { userId: req.userId }
 

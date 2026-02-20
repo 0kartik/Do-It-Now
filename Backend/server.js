@@ -3,6 +3,10 @@ import cors from "cors"
 import authRoutes from "./routes/auth.js"
 app.use("/api/v1/auth", authRoutes)
 
+import timeout from "connect-timeout"
+
+app.use(timeout("5s"))
+
 import { registerRoutes } from "./routes/index.js"
 registerRoutes(app)
 
@@ -52,3 +56,10 @@ app.disable("x-powered-by")
 
 app.use(limiter)
 app.use("/api/v1/auth", authLimiter)
+app.use((req, res, next) => {
+  if (!req.timedout) next()
+})
+
+process.on("unhandledRejection", err => {
+  console.error("Unhandled Rejection:", err)
+})

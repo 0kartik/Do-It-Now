@@ -64,3 +64,13 @@ app.use((req, res, next) => {
 process.on("unhandledRejection", err => {
   console.error("Unhandled Rejection:", err)
 })
+
+import { metrics } from "./utils/metrics.js"
+
+app.get("/metrics", (req, res) => {
+  res.json({
+    uptime: Math.floor((Date.now() - metrics.startTime) / 1000),
+    totalRequests: metrics.totalRequests,
+    totalErrors: metrics.totalErrors
+  })
+})

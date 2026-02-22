@@ -1,3 +1,6 @@
+
+import { metrics } from "../utils/metrics.js"
+
 export function requestLogger(req, res, next) {
   const start = Date.now()
 
@@ -7,6 +10,8 @@ export function requestLogger(req, res, next) {
       `${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`
     )
   })
+
+metrics.totalRequests++
 
   next()
 }

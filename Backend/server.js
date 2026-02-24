@@ -6,6 +6,15 @@ app.use("/api/v1/auth", authRoutes)
 import timeout from "connect-timeout"
 
 app.use(timeout("5s"))
+import helmet from "helmet"
+
+app.use(helmet())
+import mongoSanitize from "express-mongo-sanitize"
+
+app.use(mongoSanitize())
+import xss from "xss-clean"
+
+app.use(xss())
 
 import { registerRoutes } from "./routes/index.js"
 registerRoutes(app)

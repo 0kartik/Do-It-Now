@@ -3,6 +3,10 @@ import cors from "cors"
 import authRoutes from "./routes/auth.js"
 app.use("/api/v1/auth", authRoutes)
 
+import app from "./app.js"
+
+app.listen(PORT)
+
 import timeout from "connect-timeout"
 
 app.use(timeout("5s"))

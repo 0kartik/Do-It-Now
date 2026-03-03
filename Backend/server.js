@@ -87,3 +87,8 @@ app.get("/metrics", (req, res) => {
     totalErrors: metrics.totalErrors
   })
 })
+
+import { createClient } from "redis"
+
+const client = createClient()
+await client.connect()

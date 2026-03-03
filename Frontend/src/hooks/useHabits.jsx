@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
-import { initialHabits } from "src/data/habits"
-import { updateHabitOnComplete } from "utils/habitLogic"
-import { isNewDay } from "utils/dateUtils"
-import { dayDiff } from "utils/streakUtils"
-import { toHabitDomain, toHabitStorage } from "adapters/habitAdapters"
+import { initialHabits } from "../data/habits"
+import { updateHabitOnComplete } from "../utils/habitLogic"
+import { isNewDay } from "../utils/dateUtils"
+import { dayDiff } from "../utils/streakUtils"
+import { toHabitDomain, toHabitStorage } from "../adapters/habitAdapters"
 import { 
   saveHabits, 
   fetchHabits, 

@@ -93,3 +93,5 @@ import { createClient } from "redis"
 const client = createClient()
 await client.connect()
 
+import dotenv from "dotenv"
+dotenv.config()

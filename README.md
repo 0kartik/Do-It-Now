@@ -2,3 +2,5 @@
 A personal Motivation Assistant 
 documentation updates 
 Updated the readme.md fornfuture purposes
+
+Added docker to the project 

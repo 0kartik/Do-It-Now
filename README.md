@@ -4,3 +4,4 @@ documentation updates
 Updated the readme.md fornfuture purposes
 
 Added docker to the project 
+Understood system design fundamentals and how backend systems scale in production.

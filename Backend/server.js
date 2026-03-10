@@ -95,3 +95,18 @@ await client.connect()
 
 import dotenv from "dotenv"
 dotenv.config()
+
+import { Queue } from "bullmq"
+
+const emailQueue = new Queue("emailQueue")
+
+await emailQueue.add("sendEmail", {
+  to: "user@example.com",
+  subject: "Welcome"
+})
+
+import { Worker } from "bullmq"
+
+const worker = new Worker("emailQueue", async job => {
+  console.log("Sending email to", job.data.to)
+})

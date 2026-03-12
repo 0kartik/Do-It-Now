@@ -9,3 +9,5 @@ Understood system design fundamentals and how backend systems scale in productio
 Studied database scaling strategies including replication, sharding, and indexing
 
 Studied microservices architecture and service communication patterns
+
+Implemented API gateway routing using NGINX reverse proxy

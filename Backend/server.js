@@ -110,3 +110,14 @@ import { Worker } from "bullmq"
 const worker = new Worker("emailQueue", async job => {
   console.log("Sending email to", job.data.to)
 })
+
+import winston from "winston"
+
+const logger = winston.createLogger({
+  level: "info",
+  transports: [
+    new winston.transports.Console()
+  ]
+})
+
+logger.info("Server started")

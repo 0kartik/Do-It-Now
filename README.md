@@ -12,4 +12,4 @@ Studied microservices architecture and service communication patterns
 
 Implemented API gateway routing using NGINX reverse proxy
 
-Project milestone review, documentation, and architecture cleanup
+Project milestone review, documentation, and architecture claenUp.

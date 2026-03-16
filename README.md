@@ -13,3 +13,5 @@ Studied microservices architecture and service communication patterns
 Implemented API gateway routing using NGINX reverse proxy
 
 Project milestone review, documentation, and architecture claenUp.
+
+Extended CI pipeline with deployment stage and studied CD strategies

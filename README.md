@@ -18,4 +18,4 @@ Extended CI pipeline with deployment stage and studied CD strategies
 
 Studied container orchestration and Kubernetes architecture
 
-Extracted task service and implemented service-to-service communication
+Extracted task service and implemented service-to-service communication.

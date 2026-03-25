@@ -25,3 +25,5 @@ Implemented dynamic service routing and studied service discovery concepts
 Studied distributed system challenges and fault tolerance patterns
 
 Implemented idempotency key handling to prevent duplicate requests
+
+Implemented distributed rate limiting using Redis

@@ -27,3 +27,5 @@ Studied distributed system challenges and fault tolerance patterns
 Implemented idempotency key handling to prevent duplicate requests
 
 Implemented distributed rate limiting using Redis
+
+Implemented API security enhancements and JWT hardening

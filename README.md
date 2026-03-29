@@ -28,4 +28,4 @@ Implemented idempotency key handling to prevent duplicate requests
 
 Implemented distributed rate limiting using Redis
 
-Implemented API security enhancements and JWT hardening..
+Implemented API security enhancements and JWT hardening.

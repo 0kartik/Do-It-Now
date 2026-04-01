@@ -1,8 +1,11 @@
 name: Daily Commit
 
+permissions:
+  contents: write
+
 on:
   schedule:
-    - cron: '0 18 * * *'   # runs daily at 11:30 PM IST
+    - cron: '0 18 * * *'
   workflow_dispatch:
 
 jobs:
@@ -10,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
       - name: Make changes
-        run: |
-          echo "Last updated: $(date)" >> streak.txt
+        run: echo "Last updated: $(date)" >> streak.txt
 
       - name: Commit & Push
         run: |

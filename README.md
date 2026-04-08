@@ -19,11 +19,6 @@ Extended CI pipeline with deployment stage and studied CD strategies
 Studied container orchestration and Kubernetes architecture
 
 Extracted task service and implemented service-to-service communication.
-
-Implemented dynamic service routing and studied service discovery concepts
-
-Studied distributed system challenges and fault tolerance patterns
-
 Implemented idempotency key handling to prevent duplicate requests
 
 Implemented distributed rate limiting using Redis

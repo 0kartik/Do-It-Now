@@ -21,6 +21,4 @@ Studied container orchestration and Kubernetes architecture
 Extracted task service and implemented service-to-service communication.
 Implemented idempotency key handling to prevent duplicate requests
 
-Implemented distributed rate limiting using Redis
-
-Implemented API security enhancements and JWT hardening.
+Implemented distributed rate limiting using Redis.

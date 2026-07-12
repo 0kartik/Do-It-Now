@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: do-it-now-api
+    runtime: node
+    rootDir: Backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGO_URI
+        sync: false   # set manually in the Render dashboard (e.g. your MongoDB Atlas URI)
+      - key: FRONTEND_ORIGIN
+        sync: false   # set to your deployed frontend URL, e.g. https://do-it-now.vercel.app

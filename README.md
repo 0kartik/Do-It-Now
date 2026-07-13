@@ -2,7 +2,7 @@
 
 **A full-stack productivity app for tracking daily tasks and habits** - with streak tracking (including a one-day grace period), goal setting, trend analytics, and smart nudges. Built with production-grade auth and security practices, not just CRUD.
 
-🔗 **Live demo:** [do-it-now-psi.vercel.app](https://do-it-now-psi.vercel.app)
+🔗 **Live demo:** [doitnow-app.vercel.app](https://doitnow-app.vercel.app/)
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-90.1%25-yellow)
 ![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB)
@@ -164,4 +164,4 @@ Being direct about what's left, rather than overselling it:
 
 ---
 
-<p align="center">Built by <a href="https://github.com/0kartik">0kartik</a></p>
+<p align="center">Built by <a href="https://github.com/0kartik">Janardan Kartikeya Agnihotram</a></p>

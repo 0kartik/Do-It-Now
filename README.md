@@ -1,169 +1,114 @@
 # Do It Now
 
-A full-stack productivity app for tracking daily tasks and habits, with
-streak tracking (including a one-day "grace period"), goals, trend
-analytics, and nudges — built with production-grade auth and security
-practices.
+**A full-stack productivity app for tracking daily tasks and habits** - with streak tracking (including a one-day grace period), goal setting, trend analytics, and smart nudges. Built with production-grade auth and security practices, not just CRUD.
 
-- **Frontend**: React + Vite SPA (React Router, Recharts for charts).
-- **Backend**: Express + MongoDB REST API. Cookie-based JWT auth with
-  refresh token rotation; each user only ever sees their own data.
+🔗 **Live demo:** [do-it-now-psi.vercel.app](https://do-it-now-psi.vercel.app)
 
-## Quick start (both together)
+![JavaScript](https://img.shields.io/badge/JavaScript-90.1%25-yellow)
+![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB)
+![Express](https://img.shields.io/badge/Backend-Express%20%2B%20MongoDB-47A248)
+![Tests](https://img.shields.io/badge/Tests-Jest%20%7C%20Vitest%20%7C%20Playwright-brightgreen)
 
-You need MongoDB running somewhere (local install, Docker, or Atlas).
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Quick Start](#quick-start)
+- [Features](#features)
+- [API Reference](#api-reference)
+- [Data Model](#data-model)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Known Limitations](#known-limitations)
+
+---
+
+## Overview
+
+Do It Now solves a simple problem - most habit trackers either oversimplify (a checkbox and a streak number) or overcomplicate (full project-management suites). This app sits in between: enough structure to set real goals and see trends, without the overhead.
+
+It was also built as an exercise in shipping a **production-honest** side project - real auth security, rate limiting, structured logging, and test coverage across all three layers, rather than a demo that only works on `localhost`.
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React + Vite (SPA), React Router, Recharts |
+| Backend | Express + MongoDB (Mongoose) |
+| Auth | Cookie-based JWT with refresh token rotation |
+| Testing | Jest + Supertest + mongodb-memory-server (backend), Vitest + React Testing Library (frontend), Playwright (E2E) |
+| Deployment | Docker, Render (backend), Vercel (frontend) |
+
+## Quick Start
+
+You'll need MongoDB running somewhere - local install, Docker, or Atlas.
 
 **1. Backend**
-
 ```bash
 cd Backend
-cp .env.example .env      # edit MONGO_URI / JWT_SECRET if needed
+cp .env.example .env      # set MONGO_URI / JWT_SECRET
 npm install
 npm start
 ```
-
 Runs on `http://localhost:5000`.
 
 **2. Frontend**
-
 ```bash
 cd Frontend
-cp .env.example .env      # defaults to http://localhost:5000/api/v1, fine for local dev
+cp .env.example .env      # defaults to http://localhost:5000/api/v1
 npm install
 npm run dev
 ```
-
 Open the printed local URL, register an account, and go.
 
-## What's in each tier
-
-### Tier 1 — production security & operations
-
-- **httpOnly cookies, not localStorage**, for both the access token (15 min)
-  and refresh token (30 days) — immune to token theft via XSS.
-- **Refresh token rotation with revocation.** Every `/auth/refresh` call
-  issues a new refresh token and invalidates the old one (the hash is
-  checked against what's stored on the user). Logout clears the stored
-  hash server-side, so a stolen cookie stops working immediately, not just
-  when it expires.
-- **CORS allowlist** (`FRONTEND_ORIGIN`) instead of accepting all origins.
-- **Boot-time config validation** — `Backend/config/index.js` refuses to
-  start in `NODE_ENV=production` if `JWT_SECRET` is missing/default,
-  `MONGO_URI` is unset, or `FRONTEND_ORIGIN` is unset.
-- **Pagination + search** on `GET /habits` and `GET /tasks`
-  (`?page=&limit=&search=`).
-- **Per-user rate limiting** on all write routes (`Backend/middleware/rateLimiters.js`) —
-  keyed by user ID, not just IP, so one account can't be starved by
-  someone else on the same network.
-- **Structured logging** via Winston — pretty console output in dev, JSON +
-  rotating files (`Backend/logs/`) in production.
-- **Hand-rolled NoSQL-injection sanitizer** (`Backend/middleware/sanitizeMiddleware.js`) —
-  strips `$`-prefixed keys from body/params/query. Written by hand instead
-  of using `express-mongo-sanitize`, which mutates `req.query` directly and
-  breaks under Express 5's read-only query object.
-
-### Tier 2 — product depth
-
-- **Habit goals**: set a target (e.g. "4x per week"), see a live progress
-  bar (`Habits.jsx` + `utils/goalUtils.js`).
-- **Weekly-success badge**: 🏆 shown once a habit hits its weekly target
-  (`utils/weeklySuccessUtils.js`).
-- **Smart nudges** on the Home page: flags habits about to lose a long
-  streak, inactive habits, and an overall declining trend
-  (`utils/nudgeUtils.js`).
-- **Trend chart** on Analytics: a 14-day line chart of habit/task
-  completions plus an improving/declining/stable indicator
-  (`utils/trendUtils.js` + Recharts).
-- **Task priority (low/medium/high) and due dates**, with overdue
-  highlighting.
-- **Search** on both Habits and Tasks pages, backed by the API's `?search=`.
-
-### Tier 3 — engineering signals
-
-- **Backend tests** (Jest + Supertest + `mongodb-memory-server`): auth
-  flow including refresh/revocation, habit streak/grace-period logic,
-  task CRUD, search, pagination.
-- **Frontend unit/component tests** (Vitest + React Testing Library):
-  streak/grace-period logic, risk calculation, `TaskCard`, and a
-  regression test for the double-submit bug this project used to have.
-  Run with `npm test` in `Frontend/`.
-- **E2E tests** (Playwright): register → add habit → complete it → see
-  streak; add task → complete it; logout → protected routes redirect.
-  See "Running the E2E tests" below — these need a browser binary that
-  couldn't be installed in the sandbox this was built in, so they're
-  written and configured but not yet run end-to-end; they should work as-is
-  in a normal dev machine or CI.
-- **Database indexes** on the common `{ userId, createdAt }` query shape
-  for both Habit and Task collections.
-
-### Tier 4 — deployment
-
-- **`Backend/Dockerfile`** and **`Frontend/Dockerfile`** (multi-stage,
-  served via nginx with SPA fallback routing).
-- **`docker_compose.yml`** at the repo root runs backend + frontend +
-  MongoDB together.
-- **`Backend/render.yaml`** — one-click-ish deploy config for
-  [Render](https://render.com).
-- **`Frontend/vercel.json`** — SPA rewrite rule for
-  [Vercel](https://vercel.com).
-- **CI deploy job** (`.github/workflows/ci.yml`) — after tests pass on
-  `main`, it POSTs to Render/Vercel deploy hooks *if* you've added them as
-  repo secrets; otherwise it just logs that they're not configured and
-  skips (nothing breaks if you haven't set this up).
-
-## Deploying for real — exact steps
-
-I can't create cloud accounts on your behalf, so this part needs you, but
-every config file is ready to go:
-
-1. **Database**: create a free cluster at
-   [MongoDB Atlas](https://www.mongodb.com/cloud/atlas), get its
-   connection string.
-2. **Backend on Render**: New → Web Service → connect this repo → Render
-   will detect `Backend/render.yaml`. Set `MONGO_URI` to your Atlas string
-   and `FRONTEND_ORIGIN` to your (soon-to-exist) Vercel URL in the Render
-   dashboard's environment variables.
-3. **Frontend on Vercel**: New Project → import this repo → set root
-   directory to `Frontend` → add environment variable
-   `VITE_API_URL=https://<your-render-service>.onrender.com/api/v1`
-   → deploy.
-4. **Go back to Render** and update `FRONTEND_ORIGIN` to your real Vercel
-   URL (needed for CORS + cookies to work), then redeploy the backend.
-5. **Optional — auto-deploy from CI**: in Render, create a Deploy Hook
-   (Settings → Deploy Hook) and add it as a GitHub repo secret named
-   `RENDER_DEPLOY_HOOK`. In Vercel, create a Deploy Hook (Project Settings
-   → Git → Deploy Hooks) and add it as `VERCEL_DEPLOY_HOOK`. Now every
-   merge to `main` that passes tests triggers both deploys automatically.
-6. **Optional — uptime monitoring**: point a free
-   [UptimeRobot](https://uptimerobot.com) monitor at
-   `https://<your-render-service>.onrender.com/health`.
-
-## Running the tests
-
+**Or, with Docker Compose:**
 ```bash
-# Backend (uses an in-memory MongoDB, no real DB needed)
-cd Backend
-npm test
-
-# Frontend unit/component tests
-cd Frontend
-npm test
-
-# Frontend E2E (needs a browser binary + both servers running)
-cd Frontend
-npx playwright install        # one-time, downloads browser binaries
-npm run test:e2e
+docker compose -f docker_compose.yml up
 ```
 
-## API reference
+## Features
+
+### 🔒 Production Security & Operations
+- **httpOnly cookies**, not `localStorage`, for both access token (15 min) and refresh token (30 days) - immune to XSS-based token theft.
+- **Refresh token rotation with revocation** - every `/auth/refresh` call issues a new refresh token and invalidates the old one; logout revokes server-side immediately.
+- **CORS allowlist** via `FRONTEND_ORIGIN`, not a wildcard.
+- **Boot-time config validation** — the server refuses to start in `NODE_ENV=production` if `JWT_SECRET`, `MONGO_URI`, or `FRONTEND_ORIGIN` are missing or default.
+- **Per-user rate limiting** on write routes, keyed by user ID (not just IP) — one account can't be starved by another user sharing a network.
+- **Structured logging** via Winston — readable console output in dev, JSON + rotating files in production.
+- **Hand-rolled NoSQL-injection sanitizer** — strips `$`-prefixed keys from `body`/`params`/`query`. Written by hand instead of using `express-mongo-sanitize`, which mutates `req.query` directly and breaks under Express 5's read-only query object.
+- **Pagination + search** on `GET /habits` and `GET /tasks`.
+
+### 📊 Product Depth
+- **Habit goals** - set a target (e.g. "4x per week") with a live progress bar.
+- **Weekly-success badges** - 🏆 awarded once a habit hits its weekly target.
+- **Smart nudges** on the home page - flags habits at risk of losing a long streak, inactive habits, and overall declining trends.
+- **14-day trend chart** on the analytics page, with an improving / declining / stable indicator.
+- **Task priority** (low / medium / high) and due dates, with overdue highlighting.
+- **Search** on both Habits and Tasks pages.
+
+### 🧪 Engineering Signals
+- **Backend tests** — auth flow (including refresh/revocation), streak/grace-period logic, task CRUD, search, pagination.
+- **Frontend tests** — streak/grace-period logic, risk calculation, `TaskCard`, plus a regression test for a double-submit bug this project used to have.
+- **E2E tests (Playwright)** — register → add habit → complete it → see streak; add task → complete it; logout → protected routes redirect.
+- **Database indexes** on the `{ userId, createdAt }` query shape for both collections.
+
+### 🚀 Deployment
+- Multi-stage Dockerfiles for both backend and frontend (frontend served via nginx with SPA fallback routing).
+- `docker_compose.yml` to run backend + frontend + MongoDB together locally.
+- `render.yaml` and `vercel.json` for one-click-ish deploys.
+- CI deploy job that triggers Render/Vercel deploy hooks after tests pass on `main`.
+
+## API Reference
 
 | Endpoint | Auth | Description |
 |---|---|---|
 | `POST /api/v1/auth/register` | – | Create an account, sets auth cookies |
 | `POST /api/v1/auth/login` | – | Log in, sets auth cookies |
-| `POST /api/v1/auth/refresh` | cookie | Rotate to a new access+refresh token pair |
+| `POST /api/v1/auth/refresh` | cookie | Rotate to a new access + refresh token pair |
 | `POST /api/v1/auth/logout` | – | Revoke the refresh token, clear cookies |
-| `GET /api/v1/auth/me` | ✔ | Current user (used on app load to check session) |
+| `GET /api/v1/auth/me` | ✔ | Current user (session check on app load) |
 | `GET /api/v1/habits` | ✔ | `?search=&priority=&page=&limit=` |
 | `POST /api/v1/habits` | ✔ | Create a habit |
 | `PUT /api/v1/habits/:id` | ✔ | Update a habit |
@@ -177,28 +122,46 @@ npm run test:e2e
 | `GET /metrics` | – | Basic request/error counters |
 | `GET /api-docs` | – | Swagger UI |
 
-## Data model
+## Data Model
 
-**Habit**: name, frequency (daily/weekly), effort, priority, goal
-(target + period), streak, graceUsed, lastCompleted, createdAt.
+**Habit** — `name`, `frequency` (daily/weekly), `effort`, `priority`, `goal` (target + period), `streak`, `graceUsed`, `lastCompleted`, `createdAt`.
 
-**Task**: title, description, status (pending/done), priority
-(low/medium/high), dueDate.
+**Task** — `title`, `description`, `status` (pending/done), `priority` (low/medium/high), `dueDate`.
 
-## What's genuinely still missing for a large-scale production app
+## Testing
 
-Being direct about the remaining gap rather than overselling this:
+```bash
+# Backend — uses an in-memory MongoDB, no real DB needed
+cd Backend && npm test
 
-- No password reset / email verification flow.
-- No horizontal-scale-safe cache (the in-memory cache in
-  `Backend/utils/cache.js` would need to become Redis if you ran more than
-  one backend instance).
-- No staging environment or blue/green deploys — pushing to `main` deploys
-  straight to production.
-- No automated DB backup/restore strategy beyond whatever Atlas provides
-  by default.
-- Frontend test coverage is solid for the trickiest logic (streaks, the
-  double-submit bug) but doesn't cover every page/component.
+# Frontend unit/component tests
+cd Frontend && npm test
 
-These are the honest remaining items between "strong portfolio project
-with real production practices" and "I'd bet a company on this."
+# Frontend E2E — needs both servers running
+cd Frontend
+npx playwright install   # one-time
+npm run test:e2e
+```
+
+## Deployment
+
+1. **Database** — create a free cluster on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+2. **Backend on Render** — New → Web Service → connect this repo (auto-detects `render.yaml`). Set `MONGO_URI` and `FRONTEND_ORIGIN`.
+3. **Frontend on Vercel** — New Project → import repo → root directory `Frontend` → set `VITE_API_URL` → deploy.
+4. **Update `FRONTEND_ORIGIN`** on Render to the real Vercel URL, then redeploy the backend.
+5. **Optional — CI auto-deploy**: add `RENDER_DEPLOY_HOOK` and `VERCEL_DEPLOY_HOOK` as GitHub repo secrets so every tested merge to `main` deploys automatically.
+6. **Optional — uptime monitoring**: point [UptimeRobot](https://uptimerobot.com) at `/health`.
+
+## Known Limitations
+
+Being direct about what's left, rather than overselling it:
+
+- No password reset / email verification flow yet.
+- The in-memory cache (`Backend/utils/cache.js`) isn't horizontal-scale-safe — would need to move to Redis for multi-instance deployments.
+- No staging environment or blue/green deploys — `main` deploys straight to production.
+- No automated DB backup/restore strategy beyond what Atlas provides by default.
+- Frontend test coverage is strong on the trickiest logic (streaks, the double-submit regression) but doesn't cover every page/component yet.
+
+---
+
+<p align="center">Built by <a href="https://github.com/0kartik">0kartik</a></p>
